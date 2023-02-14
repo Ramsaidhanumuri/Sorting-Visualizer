@@ -1,0 +1,125 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Visualizer</title>
+
+    <!--===============================================================================================-->	
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!--===============================================================================================-->	
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <!--===============================================================================================-->	
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css.map' %}">
+    <!--===============================================================================================-->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <!--===============================================================================================-->	
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css.map' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <!--===============================================================================================-->		
+	<link rel="stylesheet" href="{% static 'css/bootstrap-grid.css.map' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <!--===============================================================================================-->	
+	<link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css.map' %}">
+    <!--===============================================================================================-->	
+	<link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css' %}">
+    <!--===============================================================================================-->
+	<link rel="stylesheet" href="{% static 'css/bootstrap-reboot.css.map' %}">
+    <!--===============================================================================================-->	
+	<link rel="stylesheet" href="{% static 'css/bootstrap-reboot.min.css' %}">
+    <!--===============================================================================================-->	
+	<link rel="stylesheet" href="{% static 'css/bootstrap-reboot.min.css.map' %}">
+    <!--===============================================================================================-->
+</head>
+<body>
+    <header>
+        <div class="container-fluid">
+            <div class="d-flex justify-content-center apad">
+                <h1>Sorting Visualizer</h1>
+            </div>
+            <form class="d-flex justify-content-around apad" action="" method="post">
+                {% csrf_token %}
+                <div class="text-center dbox">
+                    <p>Array Size:</p>
+                    <div class="slidecontainer">
+                        <input type="range" min=20 max=150 step=1 value=80 class="slider" id="a_size" name='a_size'>
+                        <span id="a_size_value"></span>
+                    </div>
+                </div>
+                <div class="text-center dbox">
+                    <p>Algorithm Speed:</p>
+                    <div class="slidecontainer">
+                        <div>
+                            <input type="range" min=1 max=5 step=1 value=4 class="slider" id="a_speed" name="a_speed">
+                            <span id="a_speed_value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <button name="gen_arr_b" type="submit" value="test" class="btn btn-primary">Generate Array</button>
+                </div>
+            </form>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <form class="container-fluid" action="" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="gen_arr" value={{gen_arr|join:","}}>
+                <button name="bubble_sort" type="submit" value="test" class="btn btn-primary">Bubble Sort</button>
+                <button name="selection_sort" type="submit" value="test" class="btn btn-primary">Selection Sort</button>
+                <button name="merge_sort" type="submit" value="test" class="btn btn-primary">Merge Sort</button>
+                <button name="insertion_sort" type="submit" value="test" class="btn btn-primary">Insertion Sort</button>
+                <button name="quick_sort" type="submit" value="test" class="btn btn-primary">Quick Sort</button>
+                <button name="heap_sort" type="submit" value="test" class="btn btn-primary">Heap Sort</button>
+            </form>
+        </nav>
+    </header>
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col tc_container">
+                <h4>Time Complexity</h4>
+                <div class="d-flex flex-column">
+                    <div class="p-2">Worst case:  {{tw_case}}</div>
+                    <div class="p-2">Average case:   {{ta_case}}</div>
+                    <div class="p-2">Best case:  {{best_case}}</div>
+                </div>
+              </div>
+              <div class="col-8">
+                {% for message in messages %}
+                {% if message.tags == "success" %}
+                    <div class="alert alert-{{message.tags}} alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Success!</strong> {{message}}
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Error!</strong> {{message}}
+                    </div>
+                {% endif %}
+                {% endfor %}
+                <div class="array_container" style="flex-direction: row;">
+                    {% for i in gen_arr %}
+                    <div style="margin: 0% 0.1%; background-color: {{bc}}; background-image: {{bi}}; width: 4.8%; height: {{i}}%;"></div>
+                    {% endfor %}
+                </div>
+              </div>
+              
+              <div class="col sp_container">
+                <h4>Space Complexity</h4>
+                <div class="d-flex flex-column">
+                    <div class="p-2">Worst case:  {{avg_space}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+    </section>
+    <!--===============================================================================================-->
+    <script language="JavaScript" type="text/javascript" src="{% static 'js/slider.js' %}"></script>
+    <!--===============================================================================================-->
+
+</body>
+</html>
